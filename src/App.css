@@ -1,184 +1,153 @@
-.counter {
+/* Ajusta el modelo de caja para que padding y border no aumenten el tamaño total */
+{
+  box-sizing: border-box;
+}
+
+/* Estilos generales del body */
+body {
+  margin: 0; /* Quita el margen por defecto */
+  font-family: Arial, Helvetica, sans-serif; /* Fuente base */
+  background: #f4f6f8; /* Color de fondo suave */
+  color: #1f2937; /* Color de texto principal */
+}
+
+/* Contenedor principal de la aplicación */
+.app {
+  width: min(1100px, 95%); /* Máximo 1100px, pero adaptable */
+  margin: 0 auto; /* Centra el contenido */
+  padding: 24px 0; /* Espaciado vertical */
+}
+
+/* Encabezado */
+.header {
+  background: #111827; /* Fondo oscuro */
+  color: white; /* Texto blanco */
+  padding: 24px; /* Espaciado interno */
+  border-radius: 16px; /* Bordes redondeados */
+  margin-bottom: 20px; /* Separación inferior */
+}
+
+.header h1 {
+  margin: 0 0 8px; /* Quita margen superior y agrega inferior */
+}
+
+.header p {
+  margin: 0; /* Quita margen */
+}
+
+/* Resumen de cursos y favoritos */
+.summary {
+  display: flex; /* Alinea elementos en fila */
+  gap: 16px; /* Separación entre tarjetas */
+  margin-bottom: 20px;
+}
+
+.summary p {
+  background: white; /* Tarjetas blancas */
+  padding: 12px 16px; /* Espaciado interno */
+  border-radius: 12px; /* Bordes redondeados */
+  font-weight: bold; /* Texto destacado */
+}
+
+/* Contenedor de la barra de búsqueda */
+.search-container {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.search-container label {
+  display: block; /* Ocupa toda la línea */
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.search-container input {
+  width: 100%; /* Input ocupa todo el ancho */
+  padding: 12px;
+  border: 1px solid #cbd5e1; /* Borde suave */
+  border-radius: 8px;
   font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+/* Grid de tarjetas de cursos */
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive */
+  gap: 16px; /* Separación entre tarjetas */
 }
 
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+/* Tarjeta individual de curso */
+.course-card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); /* Sombra suave */
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+.course-card h2 {
+  font-size: 18px;
+  margin-top: 0;
+  text-transform: capitalize; /* Primera letra en mayúscula */
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.course-card p {
+  line-height: 1.5; /* Mejora la lectura */
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+.course-card small {
+  display: block;
+  margin-bottom: 12px;
+  color: #475569; /* Texto gris */
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+/* Botón general */
+.btn {
+  width: 100%; /* Botón ocupa todo el ancho */
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  background: #2563eb; /* Azul */
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.btn:hover {
+  background: #1d4ed8; /* Azul más oscuro al pasar el mouse */
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+/* Botón cuando el curso es favorito */
+.btn.favorite {
+  background: #dc2626; /* Rojo */
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.btn.favorite:hover {
+  background: #b91c1c; /* Rojo más oscuro */
+}
+
+/* Mensajes informativos */
+.message {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+/* Contenedor de errores */
+.error {
+  background: #fee2e2; /* Fondo rosado */
+  color: #991b1b; /* Texto rojo oscuro */
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.error button {
+  padding: 8px 12px;
+  border: none;
+  background: #991b1b; /* Botón rojo oscuro */
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
 }
