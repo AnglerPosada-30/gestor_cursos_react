@@ -1,122 +1,112 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useMemo, useState } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import SearchBar from "./components/SearchBar";
+import CourseList from "./components/CourseList";
+import { getCourses } from "./services/courseService";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Estado donde guardo todos los cursos que vienen desde la API
+  const [courses, setCourses] = useState([]);
+
+  // Estado para manejar el texto que el usuario escribe en la barra de búsqueda
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Estado para manejar los favoritos, pero guardados en localStorage
+  const [favorites, setFavorites] = useLocalStorage("favoriteCourses", []);
+
+  // Estado para mostrar un mensaje de carga mientras llegan los cursos
+  const [loading, setLoading] = useState(true);
+
+  // Estado para mostrar errores si la API falla
+  const [error, setError] = useState("");
+
+  // Función que carga los cursos desde el servicio
+  const loadCourses = async () => {
+    try {
+      setLoading(true);   // Activo el estado de carga
+      setError("");       // Limpio errores previos
+
+      const data = await getCourses(); // Llamo a la API
+      setCourses(data);                // Guardo los cursos en el estado
+    } catch (error) {
+      // Si algo falla, muestro un mensaje de error
+      setError(error.message || "Ocurrió un error inesperado.");
+    } finally {
+      // Siempre desactivo la carga, pase lo que pase
+      setLoading(false);
+    }
+  };
+
+  // useEffect para cargar los cursos solo una vez al iniciar la app
+  useEffect(() => {
+    loadCourses();
+  }, []);
+
+  // Filtro los cursos según lo que el usuario escribe en la barra de búsqueda
+  const filteredCourses = useMemo(() => {
+    const normalizedSearch = searchTerm.toLowerCase().trim();
+
+    // Devuelvo solo los cursos cuyo título coincide con la búsqueda
+    return courses.filter((course) =>
+      course.title.toLowerCase().includes(normalizedSearch)
+    );
+  }, [courses, searchTerm]);
+
+  // Función para agregar o quitar un curso de favoritos
+  const handleToggleFavorite = (course) => {
+    // Verifico si el curso ya está en favoritos
+    const exists = favorites.some((fav) => fav.id === course.id);
+
+    if (exists) {
+      // Si ya existe, lo elimino de favoritos
+      const updatedFavorites = favorites.filter((fav) => fav.id !== course.id);
+      setFavorites(updatedFavorites);
+      return;
+    }
+
+    // Si no existe, lo agrego
+    setFavorites([...favorites, course]);
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+    <main className="app">
+      {/* Encabezado principal */}
+      <Header />
+
+      {/* Resumen de cursos y favoritos */}
+      <section className="summary">
+        <p>Total de cursos: {courses.length}</p>
+        <p>Favoritos: {favorites.length}</p>
       </section>
 
-      <div className="ticks"></div>
+      {/* Barra de búsqueda */}
+      <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* Mensaje mientras se cargan los cursos */}
+      {loading && <p className="message">Cargando cursos...</p>}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Mensaje de error si la API falla */}
+      {error && (
+        <div className="error">
+          <p>{error}</p>
+          <button type="button" onClick={loadCourses}>
+            Reintentar
+          </button>
+        </div>
+      )}
+
+      {/* Lista de cursos filtrados, solo si no hay error ni carga */}
+      {!loading && !error && (
+        <CourseList
+          courses={filteredCourses}
+          favorites={favorites}
+          onToggleFavorite={handleToggleFavorite}
+        />
+      )}
+    </main>
+  );
 }
 
-export default App
+export default App;
