@@ -1,6 +1,6 @@
 //Importamos la función de sanitización creada.
 //Esto significa que antes de mostrar el título o la descripción, el componente limpia el texto para evitar: carácteres raros, HTML no deseado o posibles intentos de inyección.
-import { sanitizeText } from "../utils/sanitizeText";
+import { sanitizeText } from "../utils/sanitize";
 
 // Creamos la función que recibe tres props
 //1.course → objeto con los datos del curso (título, descripción, teacherId, etc.).
