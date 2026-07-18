@@ -151,3 +151,42 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+
+
+/* Desafío 3: Modo oscuro para la aplicación. */
+
+/* Fondo general de la página en modo oscuro.  */
+body:has(.dark-mode) {
+  background: #111827;
+}
+
+/* Contenedor principal.  */
+.app.dark-mode {
+  color: #f3f4f6
+}
+
+/* Tarjetas de cursos */
+.app.dark-mode .course-card {
+  background: #1f2937;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+}
+
+.app.dark-mode .course-card small {
+  color: #9ca3af;
+}
+
+/* Contenedores de resumen y mensajes */
+.app.dark-mode .summary p,
+.app.dark-mode .message,
+.app.dark-mode .search-container {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+
+/* Inputs y Selects en modo oscuro */
+.app.dark-mode .search-container input,
+.app.dark-mode .search-container select {
+  background: #374151;
+  color: #f3f4f6;
+  border: 1px solid #4b5563;
+}
