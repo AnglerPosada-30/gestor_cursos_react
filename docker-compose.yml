@@ -1,0 +1,19 @@
+services:
+  sonarqube:
+    # Uso la imagen oficial de SonarQube en su edición Community.
+    # Esta imagen contiene todo lo necesario para levantar el servidor de análisis.
+    image: sonarqube:community
+
+    # Le asigno un nombre al contenedor para identificarlo fácilmente.
+    container_name: sonarqube-react
+
+    # Expongo el puerto 9000 del contenedor hacia mi máquina.
+    # SonarQube se accede desde el navegador en http://localhost:9000
+    ports:
+      - "9000:9000"
+
+    # Desactivo las verificaciones de arranque de Elasticsearch.
+    # Esto permite que SonarQube funcione sin requerir configuraciones avanzadas
+    # en entornos locales o de desarrollo.
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true

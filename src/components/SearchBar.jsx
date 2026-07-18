@@ -8,7 +8,7 @@ const SearchBar = ({ searchTerm, onSearchChange }) => {
     //Lo preparamos para que se pueda estilizar con CSS, agregando una clase "search-container" al div que contiene el label y el input.
     <div className="search-container">
 
-        // Agregamos un label para el input, lo que muestra "buscar curso:" sobre el campo de búsqueda.
+         {/* Agregamos un label para el input, lo que muestra "buscar curso:" sobre el campo de búsqueda. */}
         <label htmlFor="search-input">Buscar curso:</label>
         <input
           id="search"

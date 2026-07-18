@@ -1,5 +1,5 @@
 /* Ajusta el modelo de caja para que padding y border no aumenten el tamaño total */
-{
+* {
   box-sizing: border-box;
 }
 
@@ -29,10 +29,12 @@ body {
 
 .header h1 {
   margin: 0 0 8px; /* Quita margen superior y agrega inferior */
+  color: #754cdb
 }
 
 .header p {
   margin: 0; /* Quita margen */
+  color: #524080
 }
 
 /* Resumen de cursos y favoritos */
